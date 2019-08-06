@@ -9,6 +9,7 @@ Você foi incubido de implementar um sistema semelhando a um Blog.
 O sistema deverá ter 3 classes de entidade:
 
 Mensagem
+
 -Chave primária
 -Título
 -Descrição
@@ -16,6 +17,7 @@ Mensagem
 -Categoria
 
 Comentário
+
 -Chave primária
 -Chave estrangeira para referenciar a mensagem
 -Titulo
@@ -24,6 +26,7 @@ Comentário
 -Autor(pode ser string mesmo)
 
 Categoria
+
 -Chave primária
 -Descrição
 
