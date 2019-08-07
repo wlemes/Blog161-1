@@ -4,7 +4,7 @@ Avaliação de conhecimento
 
 -Exercício de fixação:
 
-Você foi incubido de implementar um sistema semelhando a um Blog.
+Você foi incubido de implementar um sistema semelhante a um Blog.
 
 O sistema deverá ter 3 classes de entidade:
 
