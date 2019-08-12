@@ -21,7 +21,8 @@ namespace Blog161.Controllers
         // GET: Comentario
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Comentario.ToListAsync());
+            var blog161Context = _context.Comentario.Include(c => c.Mensagem);
+            return View(await blog161Context.ToListAsync());
         }
 
         // GET: Comentario/Details/5
@@ -33,6 +34,7 @@ namespace Blog161.Controllers
             }
 
             var comentario = await _context.Comentario
+                .Include(c => c.Mensagem)
                 .FirstOrDefaultAsync(m => m.ComentarioId == id);
             if (comentario == null)
             {
@@ -45,6 +47,7 @@ namespace Blog161.Controllers
         // GET: Comentario/Create
         public IActionResult Create()
         {
+            ViewData["MensagemId"] = new SelectList(_context.Mensagem, "MensagemId", "Titulo");
             return View();
         }
 
@@ -53,7 +56,7 @@ namespace Blog161.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ComentarioId,Titulo,Descricao,DataComentario,Autor")] Comentario comentario)
+        public async Task<IActionResult> Create([Bind("ComentarioId,Titulo,Descricao,DataComentario,Autor,MensagemId")] Comentario comentario)
         {
             if (ModelState.IsValid)
             {
@@ -61,6 +64,7 @@ namespace Blog161.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["MensagemId"] = new SelectList(_context.Mensagem, "MensagemId", "MensagemId", comentario.MensagemId);
             return View(comentario);
         }
 
@@ -77,6 +81,7 @@ namespace Blog161.Controllers
             {
                 return NotFound();
             }
+            ViewData["MensagemId"] = new SelectList(_context.Mensagem, "MensagemId", "MensagemId", comentario.MensagemId);
             return View(comentario);
         }
 
@@ -85,7 +90,7 @@ namespace Blog161.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ComentarioId,Titulo,Descricao,DataComentario,Autor")] Comentario comentario)
+        public async Task<IActionResult> Edit(int id, [Bind("ComentarioId,Titulo,Descricao,DataComentario,Autor,MensagemId")] Comentario comentario)
         {
             if (id != comentario.ComentarioId)
             {
@@ -112,6 +117,7 @@ namespace Blog161.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["MensagemId"] = new SelectList(_context.Mensagem, "MensagemId", "MensagemId", comentario.MensagemId);
             return View(comentario);
         }
 
@@ -124,6 +130,7 @@ namespace Blog161.Controllers
             }
 
             var comentario = await _context.Comentario
+                .Include(c => c.Mensagem)
                 .FirstOrDefaultAsync(m => m.ComentarioId == id);
             if (comentario == null)
             {

@@ -1,9 +1,8 @@
-﻿@model IEnumerable<Blog161.Models.Mensagem>
+﻿@model Blog161.ViewModel.ViewMensagensEComentarios
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Mensagens";
 }
-
 <h1>Posts</h1>
 
 <p>
@@ -52,21 +51,44 @@
         </tbody>
     </table>*@
 
-@foreach (var item in Model)
+@foreach (var item in Model.Mensagens)
 {
     <tr>
         <td>
             <h1>@Html.DisplayFor(modelItem => item.Titulo)</h1>
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Descricao)
+            <h3>@Html.DisplayFor(modelItem => item.Descricao)</h3>
         </td>
         <td>
-            <br />
-            <h5>Categoria:</h5> <h6> @Html.DisplayFor(modelItem => item.Categoria.Descricao)</h6>
+            <div class="card-body">
+                <p> "@Html.DisplayFor(modelItem => item.Descricao)"</p>
+                <h5 class="card-title">Comentários</h5>
+                <div class="row">
+
+                    @foreach (var item2 in Model.Comentarios)
+                    {
+                        @if (item2.MensagemId == item.MensagemId)
+                        {
+                            <div class="col-sm-6">
+                                <div class="card mb-2">
+                                    <div class="card-body">
+                                        <h5 class="card-title">@item2.Titulo</h5>
+                                        <p class="card-text">@item2.Descricao</p>
+                                        <span class="blockquote-footer float-left">@item2.Autor - @item2.DataComentario</span>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    }
+                </div>
+
+                <a asp-action="Create" asp-controller="Comentario" class="btn btn-primary float-right">Comentar</a>
+
+            </div>
         </td>
         <td>
             <a asp-action="Delete" asp-route-id="@item.MensagemId">Delete</a>
         </td>
-</tr>
+    </tr>
 }

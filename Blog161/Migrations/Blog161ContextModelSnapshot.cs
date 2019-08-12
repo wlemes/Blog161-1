@@ -43,9 +43,13 @@ namespace Blog161.Migrations
 
                     b.Property<string>("Descricao");
 
+                    b.Property<int>("MensagemId");
+
                     b.Property<string>("Titulo");
 
                     b.HasKey("ComentarioId");
+
+                    b.HasIndex("MensagemId");
 
                     b.ToTable("Comentario");
                 });
@@ -69,6 +73,14 @@ namespace Blog161.Migrations
                     b.HasIndex("CategoriaId");
 
                     b.ToTable("Mensagem");
+                });
+
+            modelBuilder.Entity("Blog161.Models.Comentario", b =>
+                {
+                    b.HasOne("Blog161.Models.Mensagem", "Mensagem")
+                        .WithMany("Comentarios")
+                        .HasForeignKey("MensagemId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Blog161.Models.Mensagem", b =>

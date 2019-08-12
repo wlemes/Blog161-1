@@ -12951,11 +12951,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Fabrica\\Desktop\\Blog161\\Blog161\\Blog161.csproj",
+      "projectUniqueName": "C:\\Users\\Fabrica\\Desktop\\Wendel\\Blog161-1\\Blog161\\Blog161.csproj",
       "projectName": "Blog161",
-      "projectPath": "C:\\Users\\Fabrica\\Desktop\\Blog161\\Blog161\\Blog161.csproj",
+      "projectPath": "C:\\Users\\Fabrica\\Desktop\\Wendel\\Blog161-1\\Blog161\\Blog161.csproj",
       "packagesPath": "C:\\Users\\Fabrica\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Fabrica\\Desktop\\Blog161\\Blog161\\obj\\",
+      "outputPath": "C:\\Users\\Fabrica\\Desktop\\Wendel\\Blog161-1\\Blog161\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"

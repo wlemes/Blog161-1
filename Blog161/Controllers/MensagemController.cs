@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Blog161.Models;
+using Blog161.ViewModel;
 
 namespace Blog161.Controllers
 {
@@ -22,7 +23,15 @@ namespace Blog161.Controllers
         public async Task<IActionResult> Index()
         {
             var blog161Context = _context.Mensagem.Include(m => m.Categoria);
-            return View(await blog161Context.ToListAsync());
+            var blogContext1 = _context.Comentario.Include(c => c.Mensagem);
+
+            var vm = new ViewMensagensEComentarios
+            {
+                Mensagens = await blog161Context.ToListAsync(),
+                Comentarios = await blogContext1.ToListAsync()
+            };
+
+            return View(vm);
         }
 
         // GET: Mensagem/Details/5
@@ -64,7 +73,7 @@ namespace Blog161.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CategoriaId"] = new SelectList(_context.Categoria, "CategoriaId", "CategoriaId", mensagem.CategoriaId);
+            ViewData["CategoriaId"] = new SelectList(_context.Categoria, "CategoriaId", "Descricao", mensagem.CategoriaId);
             return View(mensagem);
         }
 
@@ -81,7 +90,7 @@ namespace Blog161.Controllers
             {
                 return NotFound();
             }
-            ViewData["CategoriaId"] = new SelectList(_context.Categoria, "CategoriaId", "CategoriaId", mensagem.CategoriaId);
+            ViewData["CategoriaId"] = new SelectList(_context.Categoria, "CategoriaId", "Descricao", mensagem.CategoriaId);
             return View(mensagem);
         }
 
@@ -117,7 +126,7 @@ namespace Blog161.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CategoriaId"] = new SelectList(_context.Categoria, "CategoriaId", "CategoriaId", mensagem.CategoriaId);
+            ViewData["CategoriaId"] = new SelectList(_context.Categoria, "CategoriaId", "Descricao", mensagem.CategoriaId);
             return View(mensagem);
         }
 
@@ -154,6 +163,14 @@ namespace Blog161.Controllers
         private bool MensagemExists(int id)
         {
             return _context.Mensagem.Any(e => e.MensagemId == id);
+        }
+        public async Task<Comentario> ComentariosMensagem(Mensagem mensagem)
+        {
+            var comentario = await _context.Comentario
+              .Include(c => c.Mensagem)
+              .FirstOrDefaultAsync(c => c.MensagemId == mensagem.MensagemId);
+            ViewData["ComentarioId"] = new SelectList(_context.Comentario, "Id", "Descricao", mensagem.CategoriaId);
+            return comentario;
         }
     }
 }

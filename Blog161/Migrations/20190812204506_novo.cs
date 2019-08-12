@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Blog161.Migrations
 {
-    public partial class firts : Migration
+    public partial class novo : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -19,22 +19,6 @@ namespace Blog161.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Categoria", x => x.CategoriaId);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Comentario",
-                columns: table => new
-                {
-                    ComentarioId = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Titulo = table.Column<string>(nullable: true),
-                    Descricao = table.Column<string>(nullable: true),
-                    DataComentario = table.Column<DateTime>(nullable: false),
-                    Autor = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Comentario", x => x.ComentarioId);
                 });
 
             migrationBuilder.CreateTable(
@@ -58,6 +42,34 @@ namespace Blog161.Migrations
                         principalColumn: "CategoriaId",
                         onDelete: ReferentialAction.Cascade);
                 });
+
+            migrationBuilder.CreateTable(
+                name: "Comentario",
+                columns: table => new
+                {
+                    ComentarioId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Titulo = table.Column<string>(nullable: true),
+                    Descricao = table.Column<string>(nullable: true),
+                    DataComentario = table.Column<DateTime>(nullable: false),
+                    Autor = table.Column<string>(nullable: true),
+                    MensagemId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Comentario", x => x.ComentarioId);
+                    table.ForeignKey(
+                        name: "FK_Comentario_Mensagem_MensagemId",
+                        column: x => x.MensagemId,
+                        principalTable: "Mensagem",
+                        principalColumn: "MensagemId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Comentario_MensagemId",
+                table: "Comentario",
+                column: "MensagemId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Mensagem_CategoriaId",

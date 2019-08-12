@@ -15,8 +15,9 @@ namespace Blog161.Models
 
         [ForeignKey("CategoriaId")]
         public Categoria Categoria { get; set; }
-
         public int CategoriaId { get; set; }
+
+        public ICollection<Comentario> Comentarios { get; set; }
         //SelectList
     }
 }

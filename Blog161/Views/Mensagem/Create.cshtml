@@ -4,6 +4,7 @@
     ViewData["Title"] = "Create";
 }
 
+<h1>Adicionar</h1>
 
 <h4>Mensagem</h4>
 <hr />
@@ -21,6 +22,7 @@
                 @Html.TextAreaFor(model => model.Descricao, 10, 120, htmlAttributes: new { style = "width: 100%; max-width: 100%;" })
                 <span asp-validation-for="Descricao" class="text-danger"></span>
             </div>
+
             <div class="form-group">
                 <label asp-for="CategoriaId" class="control-label"></label>
                 <select asp-for="CategoriaId" class ="form-control" asp-items="ViewBag.CategoriaId"></select>
