@@ -1,0 +1,46 @@
+﻿@model IEnumerable<BlogWendel.Models.Mensagem>
+
+@{
+    ViewData["Title"] = "Mensagens";
+}
+
+<h1>Posts</h1>
+
+<p>
+    <a asp-action="Create">Criar Novo</a>
+</p>
+
+    @foreach (var item in Model) {
+            <tr>
+                <td>
+                    <h1>@Html.DisplayFor(modelItem => item.Titulo)</h1>
+                </td>
+                <td>
+                    <div class="card-body">
+                        <h5>Descrição:</h5><p> "@Html.DisplayFor(modelItem => item.Descricao)"</p>
+                        <h5 class="card-title">Comentários</h5>
+                        <div class="row">
+                            @foreach (var comentario in item.Comentarios)
+                            {
+                                @if (comentario.MensagemId == item.MensagemId)
+                                {
+                                    <div class="col-sm-6">
+                                        <div class="card mb-2">
+                                            <div class="card-body">
+                                                <h5 class="card-title">@comentario.Titulo</h5>
+                                                <p class="card-text">@comentario.Descricao</p>
+                                                <span class="blockquote-footer float-left"><h6>Autor:  @comentario.Autor - @comentario.DataComentario</h6></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            }
+                        </div>
+                        <a asp-action="Create" asp-route-id="@item.MensagemId" asp-controller="Comentario" class="btn btn-success float-right">Comentar</a>
+                        <a asp-action="Edit" asp-controller="Mensagem" asp-route-id="@item.MensagemId" class="btn btn-primary float-right">Edit</a>
+                        <a asp-action="Delete" asp-controller="Mensagem" asp-route-id="@item.MensagemId" class="btn btn-danger float-right">Delete</a>
+                    </div>
+                </td>
+
+            </tr>
+    }
